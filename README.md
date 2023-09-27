@@ -3,13 +3,19 @@
 Magento 2 offers you an easier way to install extensions and updates by synchronizing your purchases from the marketplace to your store. If you have this setup, you can simply purchase our extension for free and then use the updater to install it into your Magento 2 site.
 When the app is installed you can continue to the Magento Settings section to setup your field mappings.
 
-# **Manual Install**
+# **Install**
 
-### From ZIP File
-- Locate the **/app/code** directory which should be under the magento root installation.
-- If the **code** folder is not there, create it.
-- Create the folder structure **PCAPredict/Addressy/** inside the **code** folder. 
-- Download the zip file from the [Magento 2 Store](https://marketplace.magento.com/pcapredict-addressy.html "Addressy Magento 2 Store") and extract the contents to the **Addressy** folder you just created.
+### Composer install
+
+- Add the repository to `repositories` in composer.json:
+  ```
+  {
+      "type": "vcs",
+      "url": "https://github.com/lacrossefootwear/addressy"
+  }
+  ```
+- Run `composer require lacrossefootwear/addressy`
+
 
 ### Magento Setup
 - Make sure you have the correct file and folder permissions set on your magento installation so that the magnento store can install the app.
