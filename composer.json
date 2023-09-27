@@ -1,0 +1,24 @@
+{
+    "name": "lacrossefootwear/addressy",
+    "description": "Address Validation for Checkout Forms",
+    "repositories": {
+    },
+    "require": {
+        "php": ">5.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PCAPredict\\Addressy\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    },
+    "type": "magento2-module",
+    "authors": [
+        {
+            "name": "Addressy",
+            "email": "support@addressy.com"
+        }
+    ]
+}
