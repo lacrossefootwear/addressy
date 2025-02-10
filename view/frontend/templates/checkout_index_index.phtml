@@ -1,11 +1,18 @@
 <?php
-    $pcaSettings = $this->helper('PCAPredict\Addressy\Helper\SettingsData');
-    $pcaAccCode = $pcaSettings->getAccountCode();
+/**
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ */
 
-    if ($pcaAccCode) { 
-?>
+$pcaSettings = $this->helper('PCAPredict\Addressy\Helper\SettingsData');
+$pcaAccCode = $pcaSettings->getAccountCode();
+$pcaCustomJSFront = $pcaSettings->getCustomJavaScriptFront() ?: '';
 
-<script type="text/javascript">
+if (!$pcaAccCode) {
+    return;
+}
+
+$script = <<<JavaScript
 
     requirejs(['jquery'], function(){
 
@@ -15,7 +22,6 @@
             }
         })();
     });
-  
-</script>
+JavaScript;
 
-<?php }
+echo $secureRenderer->renderTag('script', [], $script, false);
