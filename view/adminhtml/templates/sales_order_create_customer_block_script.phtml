@@ -1,17 +1,23 @@
 <?php
-    $pcaSettings = $this->helper('PCAPredict\Addressy\Helper\SettingsData');
-    $pcaAccCode = $pcaSettings->getAccountCode();
-    $pcaCustomJSBack = $pcaSettings->getCustomJavaScriptBack();
+/**
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ */
 
-    if ($pcaAccCode) { ?>
+$pcaSettings = $this->helper('PCAPredict\Addressy\Helper\SettingsData');
+$pcaAccCode = $pcaSettings->getAccountCode();
+$pcaCustomJSBack = $pcaSettings->getCustomJavaScriptBack() ?: '';
 
-<script>
+if (!$pcaAccCode) {
+    return;
+}
 
+$script = <<<JS
     (function (a, c, b, e) {
-    a[b] = a[b] || {}; a[b].initial = { accountCode: "<?php echo $pcaAccCode; ?>", host: "<?php echo $pcaAccCode; ?>.addressy.com" };
+    a[b] = a[b] || {}; a[b].initial = { accountCode: "{$pcaAccCode}", host: "{$pcaAccCode}.addressy.com" };
     a[b].on = a[b].on || function () { (a[b].onq = a[b].onq || []).push(arguments) }; var d = c.createElement("script");
     d.async = !0; d.src = e; c = c.getElementsByTagName("script")[0]; c.parentNode.insertBefore(d, c)
-    })(window, document, "pca", "/" + "/<?php echo $pcaAccCode; ?>.addressy.com/js/sensor.js");
+    })(window, document, "pca", "/" + "/{$pcaAccCode}.addressy.com/js/sensor.js");
 
     requirejs(['jquery', 'Magento_Sales/order/create/form'], function(){
 
@@ -122,14 +128,12 @@
                 }
             }
 
-            <?php if ($pcaCustomJSBack) echo $pcaCustomJSBack; ?>   
+            {$pcaCustomJSBack}
 
             //Entry code that runs - wait for the page to be ready
             pca.magento.doLoad();
             
         })();
     });
-  
-</script>
-
-<?php }
+JS;
+echo $secureRenderer->renderTag('script', [], $script, false);
