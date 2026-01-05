@@ -1,6 +1,7 @@
 <?php
 namespace PCAPredict\Addressy\Helper;
 
+#[\AllowDynamicProperties]
 class SettingsData extends \Magento\Framework\App\Helper\AbstractHelper
 {
 
